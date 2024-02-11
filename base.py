@@ -2,6 +2,9 @@ import pandas as pd
 import sqlite3
 import os
 
+import add_ons
+
+
 # git database absolute path
 def initialize():
     db_path = os.path.join(os.path.dirname(__file__), 'database', 'database.db')
@@ -99,31 +102,35 @@ def output(format, df, path=None):
             raise ValueError('Format not supported')
 
 
-# print(list_tables())
-df = pd.DataFrame({'a': [1,2,3], 'b': [4,5,6]})
-output('json', df, 'test.json')
+def query(query_string):
+    '''Query the database
+    query_string: SQL query string
+    '''
+    conn = initialize()
+    df = pd.read_sql_query(query_string, conn)
+    conn.close()
+    return df
 
-# #create a test dataframe
-# df = pd.DataFrame({'a': [1,2,3], 'b': [4,5,6]})
-# origin = pd.DataFrame({'table_name': ['test'],'add_on':['csv'] , 'params': ['test']})
-# add_table('test', df, origin)
-# #add another table
-# df = pd.DataFrame({'c': [7,8,9], 'd': [10,11,12]})
-# origin = pd.DataFrame({'table_name': ['test2'],'add_on':['csv'] , 'params': ['test2']})
-# add_table('test2', df, origin)
+def refresh_table(name):
+    pass
+
+def list_add_ons():
+    addons_directory = os.path.join(os.path.dirname(__file__), "add_ons")
+    addons = []
+
+    # Check if the addons directory exists
+    if not os.path.exists(addons_directory):
+        return 'No add_ons found.'
+
+    # Walk through the directory and look for __init__.py files
+    for root, dirs, files in os.walk(addons_directory):
+        if '__init__.py' in files:
+            addons.append(dirs)
+
+    return '\n'.join(addons[0])
+
+def use_add_on(add_on, args):
+    pass
 
 
-
-# print('\n'.join(list_tables()))
-# print(list_table_contents('test'))
-# print(list_table_contents('test2'))
-# print(list_table_contents('mq_origin'))
-
-# df = pd.DataFrame({'a': [1,2,3], 'b': [4,5,6]})
-# origin = pd.DataFrame({'table_name': ['test'],'add_on':['tsv'] , 'params': ['test']})
-# print(origin)
-# add_table('test', df, origin)
-# print(list_table_contents('mq_origin'))
-# delete_table('test')
-# print(list_tables())
-# print(list_table_contents('mq_origin'))
+print(list_add_ons())
