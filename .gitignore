@@ -162,7 +162,9 @@ cython_debug/
 #.idea/
 #ignore nondefault add-ons
 /add_ons/*
-!/add_ons/csv/
-!/add_ons/json/
-!/add_ons/rest/
-!/add_ons/excel/
+!/add_ons/mq_csv/
+!/add_ons/mq_json/
+!/add_ons/mq_rest/
+!/add_ons/mq_excel/
+!/add_ons/mq_xml/
+!/add_ons/mq_tsv/
