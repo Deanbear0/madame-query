@@ -34,12 +34,15 @@ def main(args):
         result = pd.DataFrame(columns=['result'], data=[f' Error File not found at {path}'])
         return result
     #check if file is csv
-    if not path.endswith('.csv'):
+    if not path.endswith('.csv') or not path.endswith('.tsv'):
         #create result dataframe
-        result = pd.DataFrame(columns=['result'], data=[' Error File format is not csv.'])
+        result = pd.DataFrame(columns=['result'], data=[' Error File format is not csv or tsv.'])
         return result
     #convert csv to dataframe
-    df = pd.read_csv(path)
+    if path.endswith('.csv'):
+        df = pd.read_csv(path)
+    else:
+        df = pd.read_csv(path, sep='\t')
     #use use base to create table
     base.add_table(dataframe=df, name=name, origin=gen_origin(name, path))
     result = pd.DataFrame(columns=['result'], data=[f'Success Table {name} created'])
