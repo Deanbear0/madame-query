@@ -125,8 +125,10 @@ def list_add_ons():
     # Walk through the directory and look for __init__.py files
     for root, dirs, files in os.walk(addons_directory):
         if '__init__.py' in files:
-            addons.append(dirs)
-    add_ons = [i for i in addons[0] if i != '__pycache__']
+            #get the name of the folder from root
+            directory = os.path.basename(root)
+            addons.append(directory)
+    add_ons = [i for i in addons if i != '__pycache__']
     #turn add_ons to dataframe
     add_ons = pd.DataFrame(add_ons, columns=['add_ons'])
 
