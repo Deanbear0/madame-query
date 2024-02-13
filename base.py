@@ -8,6 +8,10 @@ import add_ons
 
 # git database absolute path
 def initialize():
+    '''Initialize the database if it doesn't already exist and return a connection to it'''
+    #creates the database directory if it doesn't exist
+    if not os.path.exists(os.path.join(os.path.dirname(__file__), 'database')):
+        os.makedirs(os.path.join(os.path.dirname(__file__), 'database'))
     db_path = os.path.join(os.path.dirname(__file__), 'database', 'database.db')
     conn = sqlite3.connect(db_path)
     return conn
