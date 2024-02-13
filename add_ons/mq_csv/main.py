@@ -16,14 +16,17 @@ class argument:
         self.name = name
 def main(args):
     #checks to see if args.path and args.name are valid
+    path_index = args.index('--path')
+    name_index = args.index('--name')
+    if path_index == -1:
+        path = input('Enter the path of the csv file: ')
+    else:
+        path = args[path_index + 1]
+    if name_index == -1:
+        name = input('Enter the name of the table: ')
+    else:
+        name = args[name_index + 1]
     
-    # try :
-    path = args.path
-    name = args.name
-    # except:
-        
-    #     path = input('Enter file path: ')
-    #     name = input('Enter table name: ')
     #checks to see if the file exists
     path = os.path.expanduser(path)
     if not os.path.exists(path):
